@@ -22,6 +22,7 @@ namespace Flower_Inventory_Assessment
 
         private void LoadCategories()
         {
+            
             using (SqlConnection conn = new SqlConnection(cnntString))
             {
 
@@ -76,7 +77,71 @@ namespace Flower_Inventory_Assessment
                 
             }
         }
-        
+        protected void Filters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = Filters.SelectedValue;
+
+            if (selectedValue == "ASC")
+            {
+                SortAsc();
+            }
+            else if (selectedValue == "DESC")
+            {
+                SortDesc();
+            }
+            else
+            {
+                // Optionally reload default list or do nothing
+                LoadCategories();
+            }
+        }
+
+        protected void SortAsc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortAscCategories", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                CategoriesData.DataSource = dt;
+                CategoriesData.DataBind();
+            }
+        }
+
+        protected void SortDesc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortDescCategories", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                CategoriesData.DataSource = dt;
+                CategoriesData.DataBind();
+            }
+        }
+
+        protected void SearchByName(object sender, EventArgs e)
+        {
+            string SearchText = SearchTxt.Text.Trim();
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SearchCategoryByName", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Name", SearchText);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                CategoriesData.DataSource = dt;
+                CategoriesData.DataBind();
+            }
+        }
 
         protected void AddNewCategory(object sender, EventArgs e)
         {

@@ -17,24 +17,31 @@
     margin-right:auto; 
     display:block;
 }
-    .Description{
-    width:700px; 
-    height:80px; 
-    background-color:lightgrey;
-    border-radius: 10px;  
-    margin-top:10px;
-    margin-left:10px;
-    font-family:'Century Gothic';
-}
+   
       .Search{
-      width:30%; 
-      height:35px;
+      width:20%; 
+      height:30px;
       border-radius: 10px; 
       padding: 8px;
       margin-left:30px;
       margin-bottom:20px;
       vertical-align:middle;
   }
+      .SearchBtn{
+          width:70px;
+          height:50px;
+          border-radius: 10px; 
+          padding: 8px;
+          margin-left:-50px;
+          margin-bottom:20px;
+          vertical-align:middle;
+          background-color:green;
+          cursor:pointer;
+          border-bottom-left-radius:0px
+      }
+      .SearchBtn:hover{
+               background-color: #45a049;
+      }
   .Sort{
        width:5%; 
        height:35px;
@@ -92,13 +99,13 @@
 
            <div style="text-align:left">
        <div>
-    <asp:TextBox id="SearchTxt" CssClass="Search" type="text" placeholder="Search..." runat="server" ></asp:TextBox>
-       <asp:DropDownList ID="Filters" runat="server" CssClass="Sort" >
+    <asp:TextBox id="SearchTxt" CssClass="Search" type="text" placeholder="Search..." runat="server" ></asp:TextBox><asp:Button ID="SearchBtn" runat="server" CssClass="SearchBtn" Text="Search" Onclick="SearchByName"/>
+       <asp:DropDownList ID="Filters" runat="server" CssClass="Sort" AutoPostBack="true" OnSelectedIndexChanged="Filters_SelectedIndexChanged">
           <asp:ListItem Text="Sort" Value="" Disable="True" Selected="True" />
-          <asp:ListItem Text="A-Z" Value="ASC" />
-          <asp:ListItem Text="Z-A" Value="DESC" />
-          <asp:ListItem Text="€-€€" Value="ASC" />
-          <asp:ListItem Text="€€-€" Value="DESC" />
+          <asp:ListItem Text="A-Z" Value="ASC" Onclick="NameAsc" />
+          <asp:ListItem Text="Z-A" Value="DESC" Onclick="NameDesc"/>
+          <asp:ListItem Text="€-€€" Value="ASCPrice" Onclick="PriceAsc"/>
+          <asp:ListItem Text="€€-€" Value="DESCPrice" Onclick="PriceDesc"/>
        </asp:DropDownList>
      </div>
        <asp:Button ID="AddCategory" CssClass="AddBtn" runat="server" Text="Add Flower" OnClick="AddNewFlower" />

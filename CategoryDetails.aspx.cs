@@ -102,5 +102,111 @@ namespace Flower_Inventory_Assessment
 
             }
         }
+
+        protected void Filters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = Filters.SelectedValue;
+
+            if (selectedValue == "ASC")
+            {
+                NameAsc();
+            }
+            else if (selectedValue == "DESC")
+            {
+                NameDesc();
+            }
+            else if (selectedValue == "ASCPrice")
+            {
+                PriceAsc();
+            }
+            else if (selectedValue == "DESCPrice")
+            {
+                PriceDesc();
+            }
+            else
+            {
+                // Optionally reload default list or do nothing
+                LoadFlowers(CategoryId);
+                LoadCategoryTitle(CategoryId);
+
+            }
+        }
+
+        protected void NameAsc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortAscNameFlowers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                FlowerData.DataSource = dt;
+                FlowerData.DataBind();
+            }
+        }
+       
+
+        protected void NameDesc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortDescNameFlowers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                FlowerData.DataSource = dt;
+                FlowerData.DataBind();
+            }
+        }
+        protected void PriceAsc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortAscPriceFlowers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                FlowerData.DataSource = dt;
+                FlowerData.DataBind();
+            }
+        }
+
+        protected void PriceDesc()
+        {
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SortDescPriceFlowers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                FlowerData.DataSource = dt;
+                FlowerData.DataBind();
+            }
+        }
+
+        protected void SearchByName(object sender, EventArgs e)
+        {
+            string SearchText=SearchTxt.Text.Trim();
+            using (SqlConnection conn = new SqlConnection(cnntString))
+            {
+
+                SqlCommand cmd = new SqlCommand("SearchFlowerByName", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Name", SearchText);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                FlowerData.DataSource = dt;
+                FlowerData.DataBind();
+            }
+        }
     }
 }
