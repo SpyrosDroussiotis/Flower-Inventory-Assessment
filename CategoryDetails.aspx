@@ -61,6 +61,20 @@
  .AddBtn:hover{
      background-color: #45a049;
  }
+ .GridBtn{
+     background-color:green;
+     cursor:pointer;
+     font-family:Century Gothic;
+     font-size:15px;
+     width:70px; 
+     height:50px; 
+     height:50px; 
+     border-radius:10px;
+     cursor:pointer;
+}
+.GridBtn:hover{
+    background-color: #45a049;
+}
 </style>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -89,26 +103,25 @@
      </div>
        <asp:Button ID="AddCategory" CssClass="AddBtn" runat="server" Text="Add Flower" OnClick="AddNewFlower" />
 </div>
-         <div style="text-align:left">
-     <asp:GridView ID="FlowerData" runat="server" AutoGenerateColumns="false" CssClass="Grid" GridLines="None" RowStyle-Height="70px" OnRowDataBound="FlowerData_RowDataBound" 
-         onRowCommand="FlowerData_RowCommand" DataKeyNames="FlowerID">
+         <div style="text-align:left; margin-left:30px; font-family:'Century Gothic';">
+     <asp:GridView ID="FlowerData" runat="server" AutoGenerateColumns="false" CssClass="Grid" GridLines="None" RowStyle-Height="70px">
          <HeaderStyle Forecolor="Green" Font-Names="Century Gothic" HorizontalAlign="Left"/>
       <Columns>
          <asp:BoundField runat="server" DataField="FlowerID" HeaderText="No" >
-             <ItemStyle Width="5%"/>
-             <HeaderStyle Width="5%"/>
+             <ItemStyle Width="7.5%"/>
+             <HeaderStyle Width="7.55%"/>
              </asp:Boundfield >
          <asp:BoundField runat="server" DataField="Name" HeaderText="Flower Name" >
-              <ItemStyle Width="20%"/>
-             <HeaderStyle Width="20%"/>
+              <ItemStyle Width="25%"/>
+             <HeaderStyle Width="25%"/>
              </asp:Boundfield >
          <asp:BoundField runat="server" DataField="Color" HeaderText="Color" >
-              <ItemStyle Width="20%"/>
-             <HeaderStyle Width="20%"/>
+              <ItemStyle Width="25%"/>
+             <HeaderStyle Width="25%"/>
              </asp:Boundfield >
            <asp:BoundField runat="server" DataField="Price" HeaderText="Price" >
-      <ItemStyle Width="20%"/>
-     <HeaderStyle Width="20%"/>
+      <ItemStyle Width="25%"/>
+     <HeaderStyle Width="25%"/>
      </asp:Boundfield >
           <asp:TemplateField>
               <ItemTemplate>

@@ -12,21 +12,21 @@ namespace Flower_Inventory_Assessment
     public partial class WebForm3 : System.Web.UI.Page
     {
         string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        string CatIdStr;
+        string CategoryName;
+        int CategoryId;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            CatIdStr = Request.QueryString["CategoryID"];
+            int.TryParse(CatIdStr, out CategoryId);
+            
+
             if (!IsPostBack)
             {
-                string CatIdStr = Request.QueryString["CategoryID"];
-                if (int.TryParse(CatIdStr, out int CategoryId))
-                {
-                    LoadCategoryTitle(CategoryId);
-                    LoadFlowers(CategoryId);
-
-                }
-                else
-                {
-                    Response.Redirect("HomePage.aspx");
-                }
+                LoadFlowers(CategoryId);
+                LoadCategoryTitle(CategoryId);
+                
             }
         }
 
@@ -46,7 +46,7 @@ namespace Flower_Inventory_Assessment
                 if (reader.Read())
                 {
 
-                    string CategoryName = reader["NameOfCategory"].ToString();
+                    CategoryName = reader["NameOfCategory"].ToString();
                     string CategoryDescription = reader["Description"].ToString();
                     CatNameTitletxt.Text = CategoryName;
 
@@ -55,7 +55,6 @@ namespace Flower_Inventory_Assessment
                 }
                 else
                 {
-                    Response.Redirect("HomePage.aspx");
                 }
 
             }
@@ -78,7 +77,9 @@ namespace Flower_Inventory_Assessment
 
         protected void AddNewFlower(object sender, EventArgs e)
         {
-            Response.Redirect("HomePage.aspx");
+            CatIdStr = Request.QueryString["CategoryID"];
+            int.TryParse(CatIdStr, out int CategoryId);
+            Response.Redirect($"AddFlower.aspx?CategoryID={CategoryId}");
         }
     }
 }
