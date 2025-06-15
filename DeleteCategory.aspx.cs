@@ -46,7 +46,7 @@ namespace Flower_Inventory_Assessment
 
                     string CategoryName = reader["NameOfCategory"].ToString();
                     string CategoryDescription = reader["Description"].ToString();
-                    CatNameTitletxt.Text = "Edit " + CategoryName;
+                    CatNameTitletxt.Text = "Delete " + CategoryName;
 
                     DelCatNameTxt.Text = CategoryName;
                     DelCatDescription.Text = CategoryDescription;

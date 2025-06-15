@@ -7,6 +7,7 @@
       text-align:left; 
       font-size:70px; 
       color:green;
+      font-weight:bold;
   }
     .Line{
     color:darkgray; 

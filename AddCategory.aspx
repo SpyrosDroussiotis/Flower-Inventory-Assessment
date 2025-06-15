@@ -2,6 +2,13 @@
 
 <!DOCTYPE html>
 <style>
+     .Title{
+    font-family:'Century Gothic'; 
+    text-align:left; 
+    font-size:70px; 
+    color:green;
+    font-weight:bold;
+}
      .Line{
      color:darkgray; 
      margin-bottom:20px; 
@@ -52,7 +59,7 @@
    
     <form id="form1" runat="server">
         <div>
-            <h1 style="font-family:'Century Gothic'; text-align:left; font-size:70px; color:green" dir="ltr">New Flower Category</h1>
+            <h1 style="font-family:'Century Gothic'; text-align:left; font-size:70px; color:green">New Flower Category</h1>
             <hr CssClass="Line" />
         </div>
         <div style="margin-left:30px;">
