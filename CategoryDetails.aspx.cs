@@ -81,6 +81,10 @@ namespace Flower_Inventory_Assessment
             int.TryParse(CatIdStr, out int CategoryId);
             Response.Redirect($"AddFlower.aspx?CategoryID={CategoryId}");
         }
+        protected void GoBack(object sender, EventArgs e)
+        {
+            Response.Redirect("HomePage.aspx");
+        }
         protected void FlowerData_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "EditFlower" || e.CommandName == "DeleteFlower")
@@ -208,5 +212,6 @@ namespace Flower_Inventory_Assessment
                 FlowerData.DataBind();
             }
         }
+        
     }
 }

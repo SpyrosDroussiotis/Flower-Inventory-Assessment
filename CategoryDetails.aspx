@@ -109,6 +109,7 @@
        </asp:DropDownList>
      </div>
        <asp:Button ID="AddCategory" CssClass="AddBtn" runat="server" Text="Add Flower" OnClick="AddNewFlower" />
+       <asp:Button ID="BacktoHomepage" CssClass="AddBtn" runat="server" Text="Home" OnClick="GoBack" />
 </div>
          <div style="text-align:left; margin-left:30px; font-family:'Century Gothic';">
      <asp:GridView ID="FlowerData" runat="server" AutoGenerateColumns="false" CssClass="Grid" GridLines="None" RowStyle-Height="70px" 
