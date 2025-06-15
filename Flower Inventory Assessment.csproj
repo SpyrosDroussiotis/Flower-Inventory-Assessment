@@ -121,7 +121,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="DeleteCategory.aspx" />
+    <Content Include="DeleteFlower.aspx" />
     <Content Include="EditCategory.aspx" />
+    <Content Include="EditFlower.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
@@ -227,12 +229,26 @@
     <Compile Include="DeleteCategory.aspx.designer.cs">
       <DependentUpon>DeleteCategory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DeleteFlower.aspx.cs">
+      <DependentUpon>DeleteFlower.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteFlower.aspx.designer.cs">
+      <DependentUpon>DeleteFlower.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditCategory.aspx.cs">
       <DependentUpon>EditCategory.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditCategory.aspx.designer.cs">
       <DependentUpon>EditCategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditFlower.aspx.cs">
+      <DependentUpon>EditFlower.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditFlower.aspx.designer.cs">
+      <DependentUpon>EditFlower.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

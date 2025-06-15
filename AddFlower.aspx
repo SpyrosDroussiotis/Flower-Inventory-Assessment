@@ -23,7 +23,7 @@
          border-radius: 10px; 
          padding: 8px; 
          vertical-align:central;
-         margin-left:126px;
+         margin-left:100px;
          margin-top:15px;
      }
      .Name{
@@ -70,11 +70,11 @@ margin-top:15px;
             <asp:TextBox id="AddFlowerNameTxt"  CssClass="Name" type="text" runat="server" ></asp:TextBox>
        </div>
        <div >
-           <asp:Label ID="LlbAddFlowerColor" runat="server" Text="Color "></asp:Label>
+           <asp:Label ID="LlbAddFlowerColor" runat="server" Text="Color: "></asp:Label>
        <asp:TextBox runat="server" id="AddFlowerColor" CssClass="Box" type="text"  ></asp:TextBox>
        </div>
         <div >
-        <asp:Label ID="LblAddFlowerPrice" runat="server" Text="Price "></asp:Label>
+        <asp:Label ID="LblAddFlowerPrice" runat="server" Text="Price: "></asp:Label>
         <asp:TextBox runat="server" id="AddFlowerPrice" CssClass="Box" type="text"  ></asp:TextBox>
         </div>
             </div>

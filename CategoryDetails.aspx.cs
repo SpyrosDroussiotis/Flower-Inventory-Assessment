@@ -81,5 +81,26 @@ namespace Flower_Inventory_Assessment
             int.TryParse(CatIdStr, out int CategoryId);
             Response.Redirect($"AddFlower.aspx?CategoryID={CategoryId}");
         }
+        protected void FlowerData_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditFlower" || e.CommandName == "DeleteFlower")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = FlowerData.Rows[index];
+                int FlowerID = Convert.ToInt32(FlowerData.DataKeys[index].Value);
+
+                if (e.CommandName == "EditFlower")
+                {
+                    Response.Redirect($"EditFlower.aspx?FlowerID={FlowerID}&CategoryID={CategoryId}");
+                }
+                else if (e.CommandName == "DeleteFlower")
+                {
+                    Response.Redirect($"DeleteFlower.aspx?FlowerID={FlowerID}&CategoryID={CategoryId}");
+                }
+
+
+
+            }
+        }
     }
 }

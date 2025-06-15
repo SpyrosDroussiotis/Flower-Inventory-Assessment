@@ -104,7 +104,8 @@
        <asp:Button ID="AddCategory" CssClass="AddBtn" runat="server" Text="Add Flower" OnClick="AddNewFlower" />
 </div>
          <div style="text-align:left; margin-left:30px; font-family:'Century Gothic';">
-     <asp:GridView ID="FlowerData" runat="server" AutoGenerateColumns="false" CssClass="Grid" GridLines="None" RowStyle-Height="70px">
+     <asp:GridView ID="FlowerData" runat="server" AutoGenerateColumns="false" CssClass="Grid" GridLines="None" RowStyle-Height="70px" 
+        onRowCommand="FlowerData_RowCommand" DataKeyNames="FlowerID">
          <HeaderStyle Forecolor="Green" Font-Names="Century Gothic" HorizontalAlign="Left"/>
       <Columns>
          <asp:BoundField runat="server" DataField="FlowerID" HeaderText="No" >
@@ -125,8 +126,8 @@
      </asp:Boundfield >
           <asp:TemplateField>
               <ItemTemplate>
-          <asp:Button ID="EditCatBtn" runat="server" CssClass="GridBtn" Text="Edit" CommandName="EditCategory" CommandArgument='<%# Container.DataItemIndex %>' ButtonType="Button"/>
-          <asp:Button ID="DeleteCatBtn"  runat="server" CssClass="GridBtn" Text="Delete" CommandName="DeleteCategory" CommandArgument='<%# Container.DataItemIndex %>' ButtonType="Button"/>
+          <asp:Button ID="EditFlowerBtn" runat="server" CssClass="GridBtn" Text="Edit" CommandName="EditFlower" CommandArgument='<%# Container.DataItemIndex %>' ButtonType="Button"/>
+          <asp:Button ID="DeleteFlowerBtn"  runat="server" CssClass="GridBtn" Text="Delete" CommandName="DeleteFlower" CommandArgument='<%# Container.DataItemIndex %>' ButtonType="Button"/>
           </ItemTemplate>
           </asp:TemplateField>
      </Columns>
