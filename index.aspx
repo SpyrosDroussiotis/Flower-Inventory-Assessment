@@ -6,6 +6,7 @@
 <head runat="server">
     <title></title>
     <style type="text/css">
+
         .LogInbtn{
             width:275px; 
             height:50px; 
@@ -16,6 +17,21 @@
         }
         .LogInbtn:hover{
             background-color: #45a049;
+        }
+        .User{
+            width:250px; 
+            height:35px; 
+            border-radius: 10px; 
+            padding: 8px;
+            font-family:'Century Gothic'
+        }
+        .Password{
+             font-family:'Century Gothic'; 
+             width:250px; 
+             height:35px; 
+             border-radius: 10px; 
+             padding: 8px; 
+             margin-top:10px;
         }
        
         
@@ -29,15 +45,16 @@
         <div style="margin-top:100px;">
         <p style="font-family:'Century Gothic'; text-align:center; font-size:40px; color:green" dir="ltr">Login</p>
                 <div style="text-align:center">
-                    <asp:TextBox id="UsernameTxt" style="width:250px; height:35px; border-radius: 10px; padding: 8px;" type="text" placeholder="Username..." runat="server" OnTextChanged="UsernameTxt_TextChanged"></asp:TextBox>
+                    <asp:TextBox id="UsernameTxt" CssClass="User" type="text" placeholder="Username..." runat="server" OnTextChanged="UsernameTxt_TextChanged"></asp:TextBox>
                 </div>
                 <div style="text-align:center">
-                    <asp:TextBox runat="server" id="PasswordTxt" style=" font-family:'Century Gothic'; width:250px; height:35px; border-radius: 10px; padding: 8px; margin-top:10px" type="text" placeholder="Password..." OnTextChanged="PasswordTxt_TextChanged"></asp:TextBox>
+                    <asp:TextBox runat="server" id="PasswordTxt" CssClass="Password" type="Password" placeholder="Password..."></asp:TextBox>
                 </div>
             <div style="text-align:center"> 
                 <p>
                     <asp:Button id="LogInbtn"  runat="server" OnClick="loginbtn_click" class="LogInbtn" type="button" Text="Log In" />
                 </p>
+                <asp:Label ID="ErrorMsg" runat="server" ForeColor="Red"></asp:Label>
             </div>
             
 

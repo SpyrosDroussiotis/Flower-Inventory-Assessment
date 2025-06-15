@@ -47,6 +47,11 @@ namespace Flower_Inventory_Assessment
                     Response.Redirect("HomePage.aspx");
                 }
             }
+            else
+            {
+                ErrorMsg.Text = "Please fill all the Boxes";
+                return;
+            }
 
         }
 

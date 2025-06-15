@@ -81,6 +81,8 @@ margin-top:15px;
         <div style="margin-top:30px;">
             <asp:Button ID="Goback" CssClass="AddBtn" runat="server" Text="Back" OnClick="Back" />
             <asp:Button ID="AddFlowerBtn" CssClass="AddBtn" runat="server" Text="Add Flower" OnClick="AddNewFlower" />
+                        <asp:Label ID="ErrorMsg" runat="server" ForeColor="Red"></asp:Label>
+
              
         </div>
     </form>

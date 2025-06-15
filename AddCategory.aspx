@@ -68,6 +68,8 @@
         <div style="margin-top:30px;">
             <asp:Button ID="Goback" CssClass="AddBtn" runat="server" Text="Back" OnClick="Back" />
             <asp:Button ID="AddCategory" CssClass="AddBtn" runat="server" Text="Add Category" OnClick="AddNewCategory" />
+            <asp:Label ID="ErrorMsg" runat="server" ForeColor="Red"></asp:Label>
+
              
         </div>
     </form>

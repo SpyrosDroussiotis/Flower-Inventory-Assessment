@@ -75,25 +75,33 @@ namespace Flower_Inventory_Assessment
             {
                 string CatName = EditCatNameTxt.Text.Trim();
                 string CatDescription= EditCatDescription.Text.Trim();
-
-                SqlCommand cmd = new SqlCommand("EditCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@NameOfCategory", CatName);
-                cmd.Parameters.AddWithValue("@Description",CatDescription);
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-
-                try
+                if (!string.IsNullOrEmpty(CatName) && !string.IsNullOrEmpty(CatDescription))
                 {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    
+
+                    SqlCommand cmd = new SqlCommand("EditCategory", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@NameOfCategory", CatName);
+                    cmd.Parameters.AddWithValue("@Description", CatDescription);
+                    cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Response.Redirect("HomePage.aspx");
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.Message);
+                    ErrorMsg.Text = "Please fill all the Boxes";
+                    return;
                 }
-                Response.Redirect("HomePage.aspx");
 
             }
         }

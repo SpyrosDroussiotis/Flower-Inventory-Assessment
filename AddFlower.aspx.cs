@@ -36,8 +36,7 @@ namespace Flower_Inventory_Assessment
 
             if (string.IsNullOrEmpty(FlowerName) || string.IsNullOrEmpty(Color) || !decimal.TryParse(PriceStr, out decimal Price))
             {
-                // put label
-                
+                ErrorMsg.Text = "Please fill all the Boxes";
                 return;
             }
 

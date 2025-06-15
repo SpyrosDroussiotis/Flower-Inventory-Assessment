@@ -73,6 +73,8 @@ font-family:Century Gothic;
          <div style="margin-top:30px;">
             <asp:Button ID="Goback" CssClass="EditBtn" runat="server" Text="Back" OnClick="Back" />
             <asp:Button ID="EditCat" CssClass="EditBtn" runat="server" Text="Edit Category" OnClick="EditCategoryBtn" />
+             <asp:Label ID="ErrorMsg" runat="server" ForeColor="Red"></asp:Label>
+
              
         </div>
     </form>

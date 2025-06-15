@@ -74,26 +74,35 @@ namespace Flower_Inventory_Assessment
                 string Price = PriceTxt.Text.Trim();
                 decimal.TryParse(Price, out decimal price);
 
-                SqlCommand cmd = new SqlCommand("EditFlower", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@Name",Name);
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-                cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
-                cmd.Parameters.AddWithValue("@Color", Color);
-                cmd.Parameters.AddWithValue("@Price", price);
-
-                try
+                if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Color) && !string.IsNullOrEmpty(Price))
                 {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
 
+                    SqlCommand cmd = new SqlCommand("EditFlower", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Name", Name);
+                    cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                    cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
+                    cmd.Parameters.AddWithValue("@Color", Color);
+                    cmd.Parameters.AddWithValue("@Price", price);
+
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.Message);
+                    ErrorMsg.Text = "Please fill all the Boxes";
+                    return;
                 }
-                Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
 
             }
         }
