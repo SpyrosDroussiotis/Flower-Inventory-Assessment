@@ -22,7 +22,6 @@ namespace Flower_Inventory_Assessment
 
         private void LoadCategories()
         {
-            string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
             using (SqlConnection conn = new SqlConnection(cnntString))
             {
 
@@ -44,7 +43,7 @@ namespace Flower_Inventory_Assessment
                 int CategoryID;
                 if (int.TryParse(CategoryId, out CategoryID))
                 {
-                    e.Row.Attributes["onclick"] = $"CategoryDetails.aspx?CategoryID={CategoryID}";
+                    e.Row.Attributes["onclick"] = $"window.location='CategoryDetails.aspx?CategoryID={CategoryID}';";
                     e.Row.Attributes["style"] = "cursor:pointer";
                     //Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
                 }
