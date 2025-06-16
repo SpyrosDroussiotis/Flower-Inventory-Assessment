@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flower_Inventory_Assessment.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -29,33 +30,16 @@ namespace Flower_Inventory_Assessment
 
         private void LoadFlowerDetails(int FlowerID)
         {
+            var service = new FlowerService(cnntString);
+            var flower=service.GetFlower(FlowerID);
 
-            using (SqlConnection conn = new SqlConnection(cnntString))
+            if (flower != null)
             {
-
-                SqlCommand cmd = new SqlCommand("GetFlower", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-
-                    string FlowerName = reader["Name"].ToString();
-                    string Price = reader["Price"].ToString();
-                    string Color = reader["Color"].ToString();
-                    FlowerNameTitletxt.Text = FlowerName;
-
-                    EditFlowerNameTxt.Text = FlowerName;
-                    ColorTxt.Text = Color;
-                    PriceTxt.Text = Price;
-                }
-                
-
+                FlowerNameTitletxt.Text = flower.Name;
+                EditFlowerNameTxt.Text = flower.Name;
+                PriceTxt.Text = flower.price;
+                ColorTxt.Text = flower.Color;
             }
-
         }
 
         protected void Back(object sender, EventArgs e)
@@ -67,8 +51,7 @@ namespace Flower_Inventory_Assessment
 
         protected void EditFlowerBtn(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
+            
                 string Name = EditFlowerNameTxt.Text.Trim();
                 string Color = ColorTxt.Text.Trim();
                 string Price = PriceTxt.Text.Trim();
@@ -76,26 +59,8 @@ namespace Flower_Inventory_Assessment
 
                 if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Color) && !string.IsNullOrEmpty(Price))
                 {
-
-                    SqlCommand cmd = new SqlCommand("EditFlower", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@Name", Name);
-                    cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-                    cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
-                    cmd.Parameters.AddWithValue("@Color", Color);
-                    cmd.Parameters.AddWithValue("@Price", price);
-
-                    try
-                    {
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                var service = new FlowerService(cnntString);
+                service.EditFlower(FlowerID,CategoryID, Name, Color,price);
                     Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
                 }
                 else
@@ -107,4 +72,3 @@ namespace Flower_Inventory_Assessment
             }
         }
     }
-}

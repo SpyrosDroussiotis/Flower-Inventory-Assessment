@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using Flower_Inventory_Assessment.services;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,20 +8,24 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static Flower_Inventory_Assessment.services.CategoryService;
 
 namespace Flower_Inventory_Assessment
 {
     public partial class EditCategory : System.Web.UI.Page
     {
         string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        int CategoryID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            string CatIdStr = Request.QueryString["CategoryID"];
+            int.TryParse(CatIdStr, out CategoryID);
+
             if (!IsPostBack)
             {
-                string CatIdStr = Request.QueryString["CategoryID"];
-                if (int.TryParse(CatIdStr, out int CategoryId))
+                if (int.TryParse(CatIdStr, out CategoryID))
                 {
-                    LoadCategoryTitle(CategoryId);
+                    LoadCategoryTitle(CategoryID);
                     
                 }
                 else
@@ -30,34 +35,23 @@ namespace Flower_Inventory_Assessment
             }
         }
 
-        private void LoadCategoryTitle(int CategoryId)
+        private void LoadCategoryTitle(int CategoryID)
         {
-           
-            using (SqlConnection conn = new SqlConnection(cnntString))
+
+
+            var service = new CategoryService(cnntString);
+            var category = service.GetCategory(CategoryID);
+
+            if (category != null)
             {
+                CatNameTitletxt.Text = "Edit " + category.NameOfCategory;
 
-                SqlCommand cmd = new SqlCommand("GetCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryId);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-
-                    string CategoryName = reader["NameOfCategory"].ToString();
-                    string CategoryDescription = reader["Description"].ToString();
-                    CatNameTitletxt.Text = "Edit " + CategoryName;
-
-                    EditCatNameTxt.Text = CategoryName;
-                    EditCatDescription.Text = CategoryDescription;
-                }
-                else
-                {
-                    Response.Redirect("HomePage.aspx");
-                }
-
+                EditCatNameTxt.Text = category.NameOfCategory;
+                EditCatDescription.Text = category.Description;
+            }
+            else
+            {
+                Response.Redirect("HomePage.aspx");
             }
 
         }
@@ -69,32 +63,12 @@ namespace Flower_Inventory_Assessment
 
         protected void EditCategoryBtn(object sender, EventArgs e)
         {
-            string CatIdStr = Request.QueryString["CategoryID"];
-           int CategoryID = int.Parse(CatIdStr);
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
                 string CatName = EditCatNameTxt.Text.Trim();
                 string CatDescription= EditCatDescription.Text.Trim();
                 if (!string.IsNullOrEmpty(CatName) && !string.IsNullOrEmpty(CatDescription))
                 {
-
-                    SqlCommand cmd = new SqlCommand("EditCategory", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@NameOfCategory", CatName);
-                    cmd.Parameters.AddWithValue("@Description", CatDescription);
-                    cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-
-                    try
-                    {
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                var service = new CategoryService(cnntString);
+                service.EditCategory(CategoryID, CatName, CatDescription);
                     Response.Redirect("HomePage.aspx");
                 }
                 else
@@ -103,7 +77,8 @@ namespace Flower_Inventory_Assessment
                     return;
                 }
 
-            }
+            
         }
-        }
-    }
+     }
+}
+    

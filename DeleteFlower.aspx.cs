@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flower_Inventory_Assessment.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace Flower_Inventory_Assessment
 {
@@ -27,57 +29,26 @@ namespace Flower_Inventory_Assessment
         }
         private void LoadFlowerDetails(int FlowerID)
         {
+            var service = new FlowerService(cnntString);
+            var flower = service.GetFlower(FlowerID);
 
-            using (SqlConnection conn = new SqlConnection(cnntString))
+            if (flower != null)
             {
-
-                SqlCommand cmd = new SqlCommand("GetFlower", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-
-                    string FlowerName = reader["Name"].ToString();
-                    string Price = reader["Price"].ToString();
-                    string Color = reader["Color"].ToString();
-                    FlowerNameTitletxt.Text = FlowerName;
-
-                    DeleteFlowerNameTxt.Text = FlowerName;
-                    ColorTxt.Text = Color;
-                    PriceText.Text = Price;
-                }
-
-
+                FlowerNameTitletxt.Text = flower.Name;
+                DeleteFlowerNameTxt.Text = flower.Name;
+                PriceText.Text = flower.price;
+                ColorTxt.Text = flower.Color;
             }
-
         }
+
+        
         protected void DeleteCategoryBtn(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
+           var service= new FlowerService(cnntString);
+            service.DeleteFlower(FlowerID);
+           Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
 
-                SqlCommand cmd = new SqlCommand("DeleteFlower", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@FlowerID", FlowerID);
-               
-                try
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
-
-            }
+           
         }
         protected void Back(object sender, EventArgs e)
         {

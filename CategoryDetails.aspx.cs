@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flower_Inventory_Assessment.services;
+using Flower_Inventory_Assessment.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -50,7 +52,6 @@ namespace Flower_Inventory_Assessment
                     string CategoryDescription = reader["Description"].ToString();
                     CatNameTitletxt.Text = CategoryName;
 
-                    //EditCatNameTxt.Text = CategoryName;
                     ShowCatDescription.Text = CategoryDescription;
                 }
                 else
@@ -62,17 +63,11 @@ namespace Flower_Inventory_Assessment
         }
         private void LoadFlowers(int CategoryId)
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-                SqlCommand cmd = new SqlCommand("GetAllFlowersOfCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryId);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+            var service = new FlowerService(cnntString);
+            DataTable dt= service.GetAllFlowers(CategoryId);
                 FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
 
         protected void AddNewFlower(object sender, EventArgs e)
@@ -81,10 +76,12 @@ namespace Flower_Inventory_Assessment
             int.TryParse(CatIdStr, out int CategoryId);
             Response.Redirect($"AddFlower.aspx?CategoryID={CategoryId}");
         }
+
         protected void GoBack(object sender, EventArgs e)
         {
             Response.Redirect("HomePage.aspx");
         }
+
         protected void FlowerData_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "EditFlower" || e.CommandName == "DeleteFlower")
@@ -138,79 +135,49 @@ namespace Flower_Inventory_Assessment
 
         protected void NameAsc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SortAscNameFlowers", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.FlowerNameAsc(CategoryId);
                 FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
        
 
         protected void NameDesc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SortDescNameFlowers", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                FlowerData.DataSource = dt;
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.FlowerNameDesc(CategoryId);
+            FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
+
         protected void PriceAsc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SortAscPriceFlowers", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                FlowerData.DataSource = dt;
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.FlowerPriceAsc(CategoryId);
+            FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
 
         protected void PriceDesc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SortDescPriceFlowers", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                FlowerData.DataSource = dt;
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.FlowerPriceDesc(CategoryId);
+            FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
 
         protected void SearchByName(object sender, EventArgs e)
         {
             string SearchText=SearchTxt.Text.Trim();
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SearchFlowerByName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Name", SearchText);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                FlowerData.DataSource = dt;
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.FlowerNameSearch(SearchText);
+            FlowerData.DataSource = dt;
                 FlowerData.DataBind();
-            }
+            
         }
         
     }

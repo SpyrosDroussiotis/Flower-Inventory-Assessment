@@ -261,6 +261,9 @@
       <DependentUpon>HomePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\CategoryService.cs" />
+    <Compile Include="services\FlowerService.cs" />
+    <Compile Include="services\SearchAndSortService.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

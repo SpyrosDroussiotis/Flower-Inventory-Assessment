@@ -7,6 +7,8 @@ using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Flower_Inventory_Assessment.Services;
+
 
 namespace Flower_Inventory_Assessment
 {
@@ -25,14 +27,12 @@ namespace Flower_Inventory_Assessment
         }
 
 
-        protected void AddNewFlower(object sender, EventArgs e)
+       
+           protected void AddNewFlower(object sender, EventArgs e)
         {
-           
-
             string FlowerName = AddFlowerNameTxt.Text.Trim();
             string Color = AddFlowerColor.Text.Trim();
             string PriceStr = AddFlowerPrice.Text.Trim();
-
 
             if (string.IsNullOrEmpty(FlowerName) || string.IsNullOrEmpty(Color) || !decimal.TryParse(PriceStr, out decimal Price))
             {
@@ -40,28 +40,13 @@ namespace Flower_Inventory_Assessment
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-                SqlCommand cmd = new SqlCommand("AddFlower", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-                cmd.Parameters.AddWithValue("@Name", FlowerName);
-                cmd.Parameters.AddWithValue("@Color", Color);
-                cmd.Parameters.AddWithValue("@Price", Price);
-
-                try
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-
+            var service = new FlowerService(cnntString);
+            service.AddFlower(CategoryID, FlowerName, Color, Price);
+            Response.Redirect($"CategoryDetails.aspx?CategoryID={CategoryID}");
         }
+
+
+        
         protected void Back(object sender, EventArgs e)
         {
            

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flower_Inventory_Assessment.services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,18 +23,11 @@ namespace Flower_Inventory_Assessment
 
         private void LoadCategories()
         {
-            
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
+            var service = new CategoryService(cnntString);
+            DataTable dt = service.GetAllCategories();
+            CategoriesData.DataSource = dt;
+            CategoriesData.DataBind();
 
-                SqlCommand cmd = new SqlCommand("GetAllCategories", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da= new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                CategoriesData.DataSource = dt;
-                CategoriesData.DataBind();
-            }
         }
 
         protected void CategoriesData_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -53,7 +47,7 @@ namespace Flower_Inventory_Assessment
                     Response.Redirect("HomePage.aspx");
                 }
 
-                
+
             }
         }
         protected void CategoriesData_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -66,15 +60,15 @@ namespace Flower_Inventory_Assessment
 
                 if (e.CommandName == "EditCategory")
                 {
-                      Response.Redirect($"EditCategory.aspx?CategoryID={categoryId}");
-                 }
-                else if(e.CommandName == "DeleteCategory")
+                    Response.Redirect($"EditCategory.aspx?CategoryID={categoryId}");
+                }
+                else if (e.CommandName == "DeleteCategory")
                 {
                     Response.Redirect($"DeleteCategory.aspx?CategoryID={categoryId}");
                 }
 
 
-                
+
             }
         }
         protected void Filters_SelectedIndexChanged(object sender, EventArgs e)
@@ -98,50 +92,31 @@ namespace Flower_Inventory_Assessment
 
         protected void SortAsc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.CatAsc();
+            CategoriesData.DataSource = dt;
+            CategoriesData.DataBind();
 
-                SqlCommand cmd = new SqlCommand("SortAscCategories", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                CategoriesData.DataSource = dt;
-                CategoriesData.DataBind();
-            }
         }
 
         protected void SortDesc()
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.CatDesc();
+            CategoriesData.DataSource = dt;
+            CategoriesData.DataBind();
 
-                SqlCommand cmd = new SqlCommand("SortDescCategories", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                CategoriesData.DataSource = dt;
-                CategoriesData.DataBind();
-            }
         }
 
         protected void SearchByName(object sender, EventArgs e)
         {
             string SearchText = SearchTxt.Text.Trim();
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("SearchCategoryByName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Name", SearchText);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                CategoriesData.DataSource = dt;
-                CategoriesData.DataBind();
-            }
+            var service = new SearchAndSortService(cnntString);
+            DataTable dt = service.SearchCat(SearchText);
+            CategoriesData.DataSource = dt;
+            CategoriesData.DataBind();
         }
+    
 
         protected void AddNewCategory(object sender, EventArgs e)
         {

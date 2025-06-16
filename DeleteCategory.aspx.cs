@@ -6,20 +6,23 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Flower_Inventory_Assessment.services;
 
 namespace Flower_Inventory_Assessment
 {
     public partial class DeleteCategory : System.Web.UI.Page
     {
         string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        int CategoryID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            string CatIdStr = Request.QueryString["CategoryID"];
+            int.TryParse(CatIdStr, out CategoryID);
             if (!IsPostBack)
             {
-                string CatIdStr = Request.QueryString["CategoryID"];
-                if (int.TryParse(CatIdStr, out int CategoryId))
+                if (int.TryParse(CatIdStr, out CategoryID))
                 {
-                    LoadCategoryTitle(CategoryId);
+                    LoadCategoryTitle(CategoryID);
 
                 }
                 else
@@ -30,61 +33,31 @@ namespace Flower_Inventory_Assessment
         }
         private void LoadCategoryTitle(int CategoryId)
         {
-
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-
-                SqlCommand cmd = new SqlCommand("GetCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryId);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
+            var service=new CategoryService(cnntString);
+            var category=service.GetCategory(CategoryID);
+           
+                if (category != null) 
                 {
+                    CatNameTitletxt.Text = "Delete " +category.NameOfCategory ;
 
-                    string CategoryName = reader["NameOfCategory"].ToString();
-                    string CategoryDescription = reader["Description"].ToString();
-                    CatNameTitletxt.Text = "Delete " + CategoryName;
-
-                    DelCatNameTxt.Text = CategoryName;
-                    DelCatDescription.Text = CategoryDescription;
+                    DelCatNameTxt.Text = category.NameOfCategory;
+                    DelCatDescription.Text = category.Description;
                 }
                 else
                 {
                     Response.Redirect("HomePage.aspx");
                 }
 
-            }
-
         }
 
         protected void DelCategoryBtn(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(cnntString))
-            {
-                string CatIdStr = Request.QueryString["CategoryID"];
-                int CategoryID = int.Parse(CatIdStr);
+            var service = new CategoryService(cnntString);
+            service.DeleteCategory(CategoryID);
+            Response.Redirect("HomePage.aspx");
 
-                SqlCommand cmd = new SqlCommand("DeleteCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-                try
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                Response.Redirect("HomePage.aspx");
-
-
-
-            }
         }
+    
 
         protected void Back(object sender, EventArgs e)
         {
