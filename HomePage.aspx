@@ -8,7 +8,7 @@
          font-family:'Century Gothic';
          font-size:20px;
          margin-left:30px;
-         width:65%;
+         width:75%;
      }
      
      .Search{

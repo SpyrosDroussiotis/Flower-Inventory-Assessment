@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -26,8 +27,8 @@ namespace Flower_Inventory_Assessment
             if (!string.IsNullOrEmpty(CatName) && !string.IsNullOrEmpty(CatDescription))
             {
 
-                string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-            using (SqlConnection conn = new SqlConnection(cnntString))
+                string cnntString = ConfigurationManager.ConnectionStrings["FlowerInventoryDB"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(cnntString))
             {
                 SqlCommand cmd = new SqlCommand("AddCategory", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

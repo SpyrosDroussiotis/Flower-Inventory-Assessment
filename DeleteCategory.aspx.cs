@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Flower_Inventory_Assessment.services;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Flower_Inventory_Assessment.services;
 
 namespace Flower_Inventory_Assessment
 {
     public partial class DeleteCategory : System.Web.UI.Page
     {
-        string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        string cnntString = ConfigurationManager.ConnectionStrings["FlowerInventoryDB"].ConnectionString;
         int CategoryID;
         protected void Page_Load(object sender, EventArgs e)
         {

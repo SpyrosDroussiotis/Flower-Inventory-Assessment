@@ -2,6 +2,7 @@
 using Flower_Inventory_Assessment.Services;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Flower_Inventory_Assessment
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
-        string cnntString = "Data Source=DESKTOP-VESJCLA\\SQLEXPRESS;Initial Catalog=FlowerInventoryAssessment;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        string cnntString = ConfigurationManager.ConnectionStrings["FlowerInventoryDB"].ConnectionString;
         string CatIdStr;
         string CategoryName;
         int CategoryId;
