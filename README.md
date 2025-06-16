@@ -46,10 +46,34 @@ This web application allows users to manage an inventory of flower categories an
 ## Challenges Faced
 1. **Maintining state between postbacks** : CategoryID was manually reload on postback to avoid being lost
 2. **Layer Seperation** : Refacotring the code in order to Create FLower,Category and SearchAndSort services
+3. **Connection String** : Refactoring the code to use Web configurations for connection String instead of hard coding it
 
 ---
 
 
 ## Assumptions Made
 1. Each flower belongs to one Category
-2. No Sign up page. User credientials for login are given by the supervisor of the user and not just creating an account on his own  
+2. No Sign up page. User credientials for login are given by the supervisor of the user and not just creating an account on his own
+
+---
+
+## Solution Path
+Flower_Inventory_Assessment/
+│
+├── services/                  # Service layer with DB logic
+│   ├── CategoryService.cs
+│   └── FlowerService.cs
+│
+├── Pages/
+│   ├── HomePage.aspx
+│   ├── AddCategory.aspx
+│   ├── EditCategory.aspx
+│   ├── DeleteCategory.aspx
+│   ├── AddFlower.aspx
+│   ├── EditFlower.aspx
+│   └── DeleteFlower.aspx
+│
+├── App_Data/                  # Contains database scripts (if any)
+├── Web.config
+└── README.md
+
