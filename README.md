@@ -41,9 +41,14 @@ This web application allows users to manage an inventory of flower categories an
    git clone https://github.com/SpyrosDroussiotis/Flower-Inventory-Assessment
    cd Flower-Inventory-Assessment
 
+---
+
 ## Challenges Faced
 1. **Maintining state between postbacks** : CategoryID was manually reload on postback to avoid being lost
 2. **Layer Seperation** : Refacotring the code in order to Create FLower,Category and SearchAndSort services
+
+---
+
 
 ## Assumptions Made
 1. Each flower belongs to one Category
