@@ -23,6 +23,12 @@ This web application allows users to manage an inventory of flower categories an
 - **Data Passing / Navigation**  
   IDs are past between pages from the URLs using query strings
 
+- **Autherization**
+
+   Check Username and password before Login. From Input Data for Login use:
+    - "Username": TestAdmin
+    - "Password": Pass1234
+
 ---
 
 ## Technologies Used
@@ -41,6 +47,7 @@ This web application allows users to manage an inventory of flower categories an
    git clone https://github.com/SpyrosDroussiotis/Flower-Inventory-Assessment
    cd Flower-Inventory-Assessment
 
+
 ---
 
 ## Challenges Faced
@@ -55,25 +62,4 @@ This web application allows users to manage an inventory of flower categories an
 1. Each flower belongs to one Category
 2. No Sign up page. User credientials for login are given by the supervisor of the user and not just creating an account on his own
 
----
-
-## Solution Path
-Flower_Inventory_Assessment/
-│
-├── services/                  # Service layer with DB logic
-│   ├── CategoryService.cs
-│   └── FlowerService.cs
-│
-├── Pages/
-│   ├── HomePage.aspx
-│   ├── AddCategory.aspx
-│   ├── EditCategory.aspx
-│   ├── DeleteCategory.aspx
-│   ├── AddFlower.aspx
-│   ├── EditFlower.aspx
-│   └── DeleteFlower.aspx
-│
-├── App_Data/                  # Contains database scripts (if any)
-├── Web.config
-└── README.md
 
